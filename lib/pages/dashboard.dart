@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lidar_application/pages/scan_tab.dart';
+//import 'services/lidar.service.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -69,7 +71,6 @@ class _DashboardPageState extends State<DashboardPage> {
           ],
         ),
 
-        // 🔹 BODY
         body: Stack(
           children: [
             // BACKGROUND
@@ -163,7 +164,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        _tabContent('No available crime scene'),
+                        const ScanTab(),
                         _tabContent('No available evidence for measurement'),
                         _tabContent('No available evidence for marking'),
                       ],

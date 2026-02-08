@@ -1,9 +1,11 @@
-import Flutter
 import UIKit
+import Flutter
+import ARKit
 import Firebase
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
+
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -11,21 +13,20 @@ import Firebase
 
     FirebaseApp.configure()
 
-      // ✅ Flutter root controller
     let controller = window?.rootViewController as! FlutterViewController
 
-    // ✅ LiDAR Method Channel
     let lidarChannel = FlutterMethodChannel(
-      name: "lidar_scanner",
+      name: "liscan/lidar",
       binaryMessenger: controller.binaryMessenger
     )
 
     lidarChannel.setMethodCallHandler { call, result in
-      if call.method == "startScan" {
-        let lidarVC = LidarViewController()
-        lidarVC.modalPresentationStyle = .fullScreen
-        controller.present(lidarVC, animated: true)
-        result(nil)
+      if call.method == "isSupported" {
+        if #available(iOS 13.4, *) {
+          result(ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh))
+        } else {
+          result(false)
+        }
       } else {
         result(FlutterMethodNotImplemented)
       }
