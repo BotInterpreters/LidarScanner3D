@@ -1,0 +1,37 @@
+{
+  "project_info": {
+    "project_number": "1007775136606",
+    "project_id": "liscan3d",
+    "storage_bucket": "liscan3d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007775136606:android:cf29b4640ff1befc47edcf",
+        "android_client_info": {
+          "package_name": "com.example.lidar_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPjP9gVTpQ2ziZ7FJo-4zAsJ2yNzFeBrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007775136606-lfr2db6o3k9roipmhv4ppaa3kibm9uu3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lidarApplication"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
