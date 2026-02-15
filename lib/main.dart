@@ -7,12 +7,12 @@ import 'pages/home.dart';
 import 'pages/signin.dart';
 import 'pages/signup.dart';
 import 'pages/dashboard.dart';
+import 'pages/profile.dart';
+import 'pages/forgot.password.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -27,6 +27,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/signup': (context) => const SignUpPage(),
         '/signin': (context) => const SignInPage(),
+        '/profile': (context) => const ProfilePage(),
+        '/forgot-password': (context) => const ForgotPassword(),
       },
     );
   }
@@ -40,6 +42,8 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+        print("Auth state: ${snapshot.data}");
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -47,13 +51,13 @@ class AuthGate extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
+          print("GOING TO DASHBOARD");
           return const DashboardPage();
         }
-        
-        return const HomePage();
 
+        print("GOING TO HOME");
+        return const HomePage();
       },
     );
   }
 }
-

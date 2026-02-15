@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lidar_application/main.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -26,14 +27,19 @@ class _SignInPageState extends State<SignInPage> {
     setState(() => _isLoading = true);
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
 
       if (mounted) {
-        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const AuthGate()),
+          (route) => false,
+        );
       }
+      
     } on FirebaseAuthException catch (e) {
       debugPrint('AUTH CODE: ${e.code}');
       debugPrint('AUTH MESSAGE: ${e.message}');
@@ -156,7 +162,7 @@ class _SignInPageState extends State<SignInPage> {
     return Center(
       child: TextButton(
         onPressed: () {
-          //Navigator.of(context).pushNamed('/signup');
+          Navigator.of(context).pushNamed('/forgot-password');
         },
         child: RichText(
           text: const TextSpan(

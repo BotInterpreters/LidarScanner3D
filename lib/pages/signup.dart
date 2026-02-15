@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:lidar_application/main.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -108,8 +109,13 @@ class _SignupPageState extends State<SignUpPage> {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      
+      if (mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const AuthGate()),
+          (route) => false,
+        );
+      }
+            
     } on FirebaseAuthException catch (e) {
       String message = 'Signup failed';
 
