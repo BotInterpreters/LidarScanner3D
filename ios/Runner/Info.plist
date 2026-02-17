@@ -55,9 +55,9 @@
   	</dict>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>LiDAR scanning requires camera access</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Motion data is required for spatial tracking</string>
+	<string>Camera access is required for LiDAR room scanning.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access is required for capturing room data.</string>
 
 
 </dict>

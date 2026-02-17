@@ -1,9 +1,7 @@
 import UIKit
 import Flutter
-import ARKit
-import Firebase
 
-@main
+@UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
 
   override func application(
@@ -11,28 +9,29 @@ import Firebase
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
-    FirebaseApp.configure()
-
     let controller = window?.rootViewController as! FlutterViewController
 
-    let lidarChannel = FlutterMethodChannel(
-      name: "liscan/lidar",
-      binaryMessenger: controller.binaryMessenger
+    let scanChannel = FlutterMethodChannel(
+        name: "crime_scene_scanner",
+        binaryMessenger: controller.binaryMessenger
     )
 
-    lidarChannel.setMethodCallHandler { call, result in
-      if call.method == "isSupported" {
-        if #available(iOS 13.4, *) {
-          result(ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh))
+    scanChannel.setMethodCallHandler { [weak self] call, result in
+        if call.method == "startScan" {
+            self?.presentScanner(from: controller)
+            result(nil)
         } else {
-          result(false)
+            result(FlutterMethodNotImplemented)
         }
-      } else {
-        result(FlutterMethodNotImplemented)
-      }
     }
 
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  private func presentScanner(from controller: FlutterViewController) {
+      let scannerVC = CrimeSceneScannerViewController()
+      scannerVC.modalPresentationStyle = .fullScreen
+      controller.present(scannerVC, animated: true)
   }
 }
